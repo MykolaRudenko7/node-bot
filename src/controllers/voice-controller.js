@@ -15,7 +15,7 @@ class VoiceController {
 
   async createOGGVoice(urlFile, fileName) {
     try {
-      const oggPath = join(directoryName, '../../voices', `${fileName}.ogg`);
+      const oggPath = join(directoryName, '../voices', `${fileName}.ogg`);
       const response = await axios({
         method: 'get',
         url: urlFile,
