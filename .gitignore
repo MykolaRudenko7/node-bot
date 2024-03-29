@@ -1,5 +1,4 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-.env
 # dependencies
 /node_modules
 /.pnp
@@ -15,3 +14,6 @@
 npm-debug.log*
 # local env files
 .env*.local
+/.env*.local
+.env
+/.env

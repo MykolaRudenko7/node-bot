@@ -11,26 +11,36 @@
     ]
   },
   "scripts": {
-    "dev": "node --watch ./src/server.js",
-    "start": "node server./src/server.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
     "prettier": "prettier --write .",
-    "lint": "eslint --fix --ext .js,.jsx ."
+    "lint": "eslint --fix .",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cross-env": "^7.0.3",
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "^3.2.4"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.19.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
-    "axios": "^1.6.5",
-    "dotenv": "^16.3.1",
+    "axios": "^1.6.8",
+    "claude-ai": "^1.2.2",
+    "dotenv": "^16.4.1",
     "fluent-ffmpeg": "^2.1.2",
-    "telegraf": "^4.15.3"
+    "form-data": "^4.0.0",
+    "nodemon": "^3.0.3",
+    "openai": "^4.30.0",
+    "telegraf": "^4.16.3"
   }
 }

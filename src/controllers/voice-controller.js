@@ -4,7 +4,7 @@ import installer from '@ffmpeg-installer/ffmpeg';
 import { createWriteStream } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import removeVoiceFile from '../utils/removeVoiceFile.js';
+import removeVoiceFile from '#utils/removeVoiceFile.js';
 
 const directoryName = dirname(fileURLToPath(import.meta.url));
 
@@ -15,7 +15,7 @@ class VoiceController {
 
   async createOGGVoice(urlFile, fileName) {
     try {
-      const oggPath = join(directoryName, '../../voices', `${fileName}.ogg`);
+      const oggPath = join(directoryName, '../voices', `${fileName}.ogg`);
       const response = await axios({
         method: 'get',
         url: urlFile,
