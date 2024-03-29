@@ -33,6 +33,7 @@ bot.on(message('voice'), async (ctx) => {
 bot.on(message('text'), async (ctx) => {
   try {
     await ctx.reply('Повідомлення отримано. Чекаю відповідь серверу...🧐');
+
     const claudeResponse = await aiController.sendRequestToClaude(
       ctx.message.text,
     );
