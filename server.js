@@ -1,25 +1,23 @@
-import { Telegraf } from 'telegraf';
-import { message } from 'telegraf/filters';
+import { Bot } from 'grammy';
 import keys from '#data/config.js';
 import voiceController from '#controllers/voice-controller.js';
 import aiController from '#controllers/ai-controller.js';
 
-const bot = new Telegraf(keys.telegramToken);
+const { telegramToken } = keys;
+const bot = new Bot(telegramToken);
 
-bot.on(message('voice'), async (ctx) => {
+bot.on('message:voice', async (ctx) => {
   try {
     await ctx.reply(
       '👂 Голосове повідомлення отримано. Чекаю відповідь серверу...🧐',
     );
 
-    const link = await ctx.telegram.getFileLink(ctx.message.voice.file_id);
+    const path = (await ctx.getFile())?.file_path;
+    const link = `https://api.telegram.org/file/bot${telegramToken}/${path}`;
     const currentUserId = ctx.message.from.id;
-    const oggPath = await voiceController.createOGGVoice(
-      link.href,
-      currentUserId,
-    );
-    const mp3Path = await voiceController.convertToMP3(oggPath, currentUserId);
 
+    const oggPath = await voiceController.createOGGVoice(link, currentUserId);
+    const mp3Path = await voiceController.convertToMP3(oggPath, currentUserId);
     const transcribedText = await aiController.transcribeVoice(mp3Path);
     await ctx.reply(`Ваш запит: ${transcribedText} ✍️`);
 
@@ -30,10 +28,9 @@ bot.on(message('voice'), async (ctx) => {
   }
 });
 
-bot.on(message('text'), async (ctx) => {
+bot.on('message', async (ctx) => {
   try {
     await ctx.reply('Повідомлення отримано. Чекаю відповідь серверу...🧐');
-
     const claudeResponse = await aiController.sendRequestToClaude(
       ctx.message.text,
     );
@@ -43,7 +40,4 @@ bot.on(message('text'), async (ctx) => {
   }
 });
 
-bot.launch();
-
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+bot.start();
